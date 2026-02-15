@@ -15,8 +15,10 @@ import { WeightChart } from '../../components/WeightChart';
 import { useWeight } from '../../hooks/useWeight';
 
 export default function WeightScreen() {
-  const { entries, addEntry, todayLogged } = useWeight();
+  const { entries, addEntry, updateEntry, deleteEntry, todayLogged } = useWeight();
   const [weightInput, setWeightInput] = useState('');
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editValue, setEditValue] = useState('');
 
   const handleAdd = async () => {
     const val = parseFloat(weightInput);
@@ -68,15 +70,60 @@ export default function WeightScreen() {
           <Text style={styles.empty}>No weight entries yet</Text>
         ) : (
           sorted.map((e) => (
-            <View key={e.id} style={styles.historyCard}>
-              <Text style={styles.historyWeight}>{e.weight} lbs</Text>
-              <Text style={styles.historyDate}>
-                {new Date(e.date).toLocaleDateString([], {
-                  month: 'short',
-                  day: 'numeric',
-                  year: 'numeric',
-                })}
-              </Text>
+            <View key={e.id}>
+              <Pressable
+                style={styles.historyCard}
+                onPress={() => {
+                  setEditingId(editingId === e.id ? null : e.id);
+                  setEditValue(String(e.weight));
+                }}
+              >
+                <Text style={styles.historyWeight}>{e.weight} lbs</Text>
+                <Text style={styles.historyDate}>
+                  {new Date(e.date).toLocaleDateString([], {
+                    month: 'short',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </Text>
+              </Pressable>
+              {editingId === e.id && (
+                <View style={styles.editRow}>
+                  <TextInput
+                    style={[styles.input, styles.editInput]}
+                    keyboardType="decimal-pad"
+                    value={editValue}
+                    onChangeText={setEditValue}
+                    placeholder="Weight (lbs)"
+                    placeholderTextColor={Colors.textDim}
+                  />
+                  <Pressable
+                    style={styles.saveBtn}
+                    onPress={() => {
+                      const val = parseFloat(editValue);
+                      if (isNaN(val) || val <= 0) {
+                        Alert.alert('Invalid', 'Enter a valid weight');
+                        return;
+                      }
+                      updateEntry(e.id, val);
+                      setEditingId(null);
+                    }}
+                  >
+                    <Text style={styles.saveBtnText}>Save</Text>
+                  </Pressable>
+                  <Pressable
+                    style={styles.deleteBtn}
+                    onPress={() => {
+                      Alert.alert('Delete Entry', 'Remove this weight entry?', [
+                        { text: 'Cancel', style: 'cancel' },
+                        { text: 'Delete', style: 'destructive', onPress: () => { deleteEntry(e.id); setEditingId(null); } },
+                      ]);
+                    }}
+                  >
+                    <Text style={styles.deleteBtnText}>Delete</Text>
+                  </Pressable>
+                </View>
+              )}
             </View>
           ))
         )}
@@ -166,6 +213,40 @@ const styles = StyleSheet.create({
   historyDate: {
     fontSize: 13,
     color: Colors.textMuted,
+  },
+  editRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  editInput: {
+    flex: 1,
+    marginBottom: 0,
+  },
+  saveBtn: {
+    backgroundColor: Colors.emerald,
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+  },
+  saveBtnText: {
+    color: Colors.white,
+    fontSize: 14,
+    fontWeight: '700',
+  },
+  deleteBtn: {
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: Colors.error,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+  },
+  deleteBtnText: {
+    color: Colors.error,
+    fontSize: 14,
+    fontWeight: '600',
   },
   empty: {
     textAlign: 'center',

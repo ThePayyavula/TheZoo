@@ -34,6 +34,22 @@ export function useWeight() {
     return newEntry;
   }, []);
 
+  const updateEntry = useCallback(async (id: string, weight: number) => {
+    setEntries((prev) => {
+      const next = prev.map((e) => (e.id === id ? { ...e, weight } : e));
+      AsyncStorage.setItem(WEIGHT_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
+  const deleteEntry = useCallback(async (id: string) => {
+    setEntries((prev) => {
+      const next = prev.filter((e) => e.id !== id);
+      AsyncStorage.setItem(WEIGHT_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const today = new Date().toISOString().slice(0, 10);
   const todayLogged = entries.some((e) => e.date.slice(0, 10) === today);
 
@@ -48,5 +64,5 @@ export function useWeight() {
     return days.size;
   })();
 
-  return { entries, loaded, addEntry, todayLogged, weekDaysLogged };
+  return { entries, loaded, addEntry, updateEntry, deleteEntry, todayLogged, weekDaysLogged };
 }
