@@ -238,9 +238,10 @@ export default function WorkoutsScreen() {
     <View style={styles.container}>
       <KeyboardAvoidingView
         style={styles.flex}
-        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
       >
-        <ScrollView contentContainerStyle={styles.content}>
+        <ScrollView contentContainerStyle={styles.content} keyboardShouldPersistTaps="handled">
           {/* Section A: Today's Calories Banner */}
           <View style={styles.banner}>
             <Text style={styles.calNumber}>{netCaloriesToday}</Text>

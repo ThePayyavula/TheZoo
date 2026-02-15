@@ -72,8 +72,10 @@ export default function ProfileScreen() {
   return (
     <KeyboardAvoidingView
       style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <ScrollView contentContainerStyle={[styles.content, { paddingTop: insets.top + 16 }]}>
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 50 : 0}
+    >
+      <ScrollView contentContainerStyle={[styles.content, { paddingTop: insets.top + 16 }]} keyboardShouldPersistTaps="handled">
         <View style={styles.headerRow}>
           <Text style={styles.headerTitle}>Profile Dashboard</Text>
           <TouchableOpacity onPress={() => router.back()} style={styles.closeBtn}>

@@ -8,6 +8,8 @@ import {
   StyleSheet,
   ActivityIndicator,
   Alert,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter } from 'expo-router';
@@ -60,7 +62,16 @@ export default function QuestsScreen() {
   };
 
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      keyboardVerticalOffset={Platform.OS === 'ios' ? 90 : 0}
+    >
+    <ScrollView
+      style={styles.scrollContainer}
+      contentContainerStyle={styles.content}
+      keyboardShouldPersistTaps="handled"
+    >
       <View style={styles.topRow}>
         <CoinDisplay coins={coins} />
       </View>
@@ -174,6 +185,7 @@ export default function QuestsScreen() {
         </View>
       )}
     </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
@@ -181,6 +193,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.bgDark,
+  },
+  scrollContainer: {
+    flex: 1,
   },
   content: {
     padding: 16,
