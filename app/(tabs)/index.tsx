@@ -6,8 +6,10 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../constants/colors';
 import { Panda } from '../../components/Panda';
+import { AnimalPet } from '../../components/AnimalPet';
 import { CoinDisplay } from '../../components/CoinDisplay';
 import { useAppContext } from '../../contexts/AppContext';
+import { PANDA_TYPES } from '../../constants/pandaTypes';
 import { useWorkouts } from '../../hooks/useWorkouts';
 import { useFoodLog } from '../../hooks/useFoodLog';
 import { useWeight } from '../../hooks/useWeight';
@@ -75,7 +77,7 @@ export default function HomeScreen() {
         <View style={styles.statItem}>
           <FontAwesome name="paw" size={14} color={Colors.emerald} />
           <Text style={styles.statValue}>{ownedPandas.length}</Text>
-          <Text style={styles.statLabel}>Pandas</Text>
+          <Text style={styles.statLabel}>Pets</Text>
         </View>
       </View>
 
@@ -93,23 +95,30 @@ export default function HomeScreen() {
       )}
 
       <View style={styles.grassland}>
-        {ownedPandas.map((panda, i) => (
-          <View
-            key={panda.instanceId}
-            style={[
-              styles.pandaWrap,
-              {
-                left: ((i * 110 + 30) % Math.max(width - 140, 1)),
-                top: 20 + (i % 4) * 90,
-              },
-            ]}>
-            <Panda size={120} wandering />
-          </View>
-        ))}
+        {ownedPandas.map((panda, i) => {
+          const petType = PANDA_TYPES.find((t) => t.id === panda.typeId);
+          return (
+            <View
+              key={panda.instanceId}
+              style={[
+                styles.pandaWrap,
+                {
+                  left: ((i * 110 + 30) % Math.max(width - 140, 1)),
+                  top: 20 + (i % 4) * 90,
+                },
+              ]}>
+              {petType?.animal ? (
+                <AnimalPet animal={petType.animal} size={120} wandering />
+              ) : (
+                <Panda size={120} wandering />
+              )}
+            </View>
+          );
+        })}
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.hint}>Tap a panda to make it dance!</Text>
+        <Text style={styles.hint}>Tap your pets to interact!</Text>
       </View>
     </LinearGradient>
   );

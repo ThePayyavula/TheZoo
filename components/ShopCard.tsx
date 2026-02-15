@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { Colors } from '../constants/colors';
 import { PandaType } from '../constants/pandaTypes';
+import { getAnimalWalkGif } from './AnimalPet';
 
 interface ShopCardProps {
   panda: PandaType;
@@ -11,11 +12,15 @@ interface ShopCardProps {
 }
 
 export function ShopCard({ panda, ownedCount, onBuy }: ShopCardProps) {
+  const previewGif = panda.animal
+    ? getAnimalWalkGif(panda.animal)
+    : require('../assets/pandas/Gifs/Idle.gif');
+
   return (
     <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onBuy}>
       <View style={[styles.imageWrap, panda.tint ? { backgroundColor: panda.tint, borderRadius: 40 } : undefined]}>
         <Image
-          source={require('../assets/pandas/Gifs/Idle.gif')}
+          source={previewGif}
           style={styles.image}
           contentFit="contain"
         />
@@ -28,7 +33,7 @@ export function ShopCard({ panda, ownedCount, onBuy }: ShopCardProps) {
         <Text style={styles.ownedText}>Owned: {ownedCount}</Text>
       )}
       <View style={styles.buyBtn}>
-        <Text style={styles.buyText}>🪙 {panda.price}</Text>
+        <Text style={styles.buyText}>{panda.price} coins</Text>
       </View>
     </TouchableOpacity>
   );

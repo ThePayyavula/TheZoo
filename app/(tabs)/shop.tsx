@@ -10,7 +10,7 @@ export default function ShopScreen() {
   const { coins, spendCoins, addPanda, countOfType } = useAppContext();
 
   const handleBuy = (pandaId: string, price: number, name: string) => {
-    Alert.alert('Buy Panda', `Buy ${name} for ${price} coins?`, [
+    Alert.alert('Buy Pet', `Buy ${name} for ${price} coins?`, [
       { text: 'Cancel', style: 'cancel' },
       {
         text: 'Buy',
@@ -18,7 +18,7 @@ export default function ShopScreen() {
           const success = await spendCoins(price);
           if (success) {
             await addPanda(pandaId);
-            Alert.alert('Welcome!', `A new ${name} has joined your grassland!`);
+            Alert.alert('Welcome!', `${name} has joined your zoo!`);
           } else {
             Alert.alert('Not enough coins', 'Complete more quests to earn coins!');
           }
@@ -35,7 +35,7 @@ export default function ShopScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <Text style={styles.subtitle}>Buy pandas for your grassland</Text>
+        <Text style={styles.subtitle}>Buy pets for your zoo</Text>
         <CoinDisplay coins={coins} />
       </View>
       {rows.map((row, rowIdx) => (
