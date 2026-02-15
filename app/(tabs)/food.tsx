@@ -116,11 +116,9 @@ export default function FoodScreen() {
         <Text style={styles.sectionTitle}>Scan Food</Text>
         <View style={styles.btnRow}>
           <Pressable style={styles.scanBtn} onPress={() => pickImage(true)}>
-            <Text style={styles.scanBtnIcon}>📷</Text>
             <Text style={styles.scanBtnText}>Camera</Text>
           </Pressable>
           <Pressable style={styles.scanBtn} onPress={() => pickImage(false)}>
-            <Text style={styles.scanBtnIcon}>🖼️</Text>
             <Text style={styles.scanBtnText}>Gallery</Text>
           </Pressable>
         </View>

@@ -5,9 +5,10 @@ import { Workout } from '../hooks/useWorkouts';
 
 interface WorkoutCardProps {
   workout: Workout;
+  activityType?: 'routine' | 'exercise';
 }
 
-export function WorkoutCard({ workout }: WorkoutCardProps) {
+export function WorkoutCard({ workout, activityType }: WorkoutCardProps) {
   const date = new Date(workout.date);
   const timeStr = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   const dateStr = date.toLocaleDateString([], { month: 'short', day: 'numeric' });
@@ -15,10 +16,19 @@ export function WorkoutCard({ workout }: WorkoutCardProps) {
   return (
     <View style={styles.card}>
       <View style={styles.iconWrap}>
-        <Text style={styles.icon}>🏋️</Text>
+        <Text style={styles.icon}>{activityType === 'routine' ? '\uD83D\uDCCB' : '\uD83C\uDFCB\uFE0F'}</Text>
       </View>
       <View style={styles.info}>
-        <Text style={styles.name}>{workout.name}</Text>
+        <View style={styles.nameRow}>
+          <Text style={styles.name}>{workout.name}</Text>
+          {activityType && (
+            <View style={[styles.badge, activityType === 'routine' ? styles.badgeRoutine : styles.badgeExercise]}>
+              <Text style={styles.badgeText}>
+                {activityType === 'routine' ? 'Routine' : 'Exercise'}
+              </Text>
+            </View>
+          )}
+        </View>
         <Text style={styles.meta}>
           {workout.duration} min · {workout.calories} cal
         </Text>
@@ -57,10 +67,31 @@ const styles = StyleSheet.create({
   info: {
     flex: 1,
   },
+  nameRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
   name: {
     fontSize: 15,
     fontWeight: '600',
     color: Colors.textPrimary,
+  },
+  badge: {
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    borderRadius: 6,
+  },
+  badgeRoutine: {
+    backgroundColor: Colors.emeraldGlow,
+  },
+  badgeExercise: {
+    backgroundColor: 'rgba(249, 168, 37, 0.12)',
+  },
+  badgeText: {
+    fontSize: 10,
+    fontWeight: '600',
+    color: Colors.emerald,
   },
   meta: {
     fontSize: 13,
