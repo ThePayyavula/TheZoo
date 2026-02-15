@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, TouchableOpacity, ScrollView, StyleSheet, Dimensions } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
@@ -94,17 +94,27 @@ export default function HomeScreen() {
         </View>
       )}
 
-      <View style={styles.grassland}>
+      <ScrollView
+        style={styles.grassland}
+        contentContainerStyle={styles.grasslandContent}
+        maximumZoomScale={3}
+        minimumZoomScale={0.5}
+        bouncesZoom
+        showsHorizontalScrollIndicator={false}
+        showsVerticalScrollIndicator={false}
+      >
         {ownedPandas.map((panda, i) => {
           const petType = PANDA_TYPES.find((t) => t.id === panda.typeId);
+          const col = i % 3;
+          const row = Math.floor(i / 3);
           return (
             <View
               key={panda.instanceId}
               style={[
                 styles.pandaWrap,
                 {
-                  left: ((i * 110 + 30) % Math.max(width - 140, 1)),
-                  top: 20 + (i % 4) * 90,
+                  left: col * (width / 3) + 10,
+                  top: 20 + row * 130,
                 },
               ]}>
               {petType?.animal ? (
@@ -115,7 +125,7 @@ export default function HomeScreen() {
             </View>
           );
         })}
-      </View>
+      </ScrollView>
 
       <View style={styles.footer}>
         <Text style={styles.hint}>Tap your pets to interact!</Text>
@@ -223,6 +233,10 @@ const styles = StyleSheet.create({
   },
   grassland: {
     flex: 1,
+  },
+  grasslandContent: {
+    minHeight: 500,
+    minWidth: width,
     position: 'relative',
   },
   pandaWrap: {

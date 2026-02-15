@@ -44,7 +44,9 @@ export function Panda({ size = 120, wandering = false }: PandaProps) {
       if (shouldWalk) {
         const direction = Math.random() > 0.5 ? 1 : -1;
         scaleX.value = direction > 0 ? 1 : -1;
-        translateX.value = withTiming(translateX.value + direction * (40 + Math.random() * 60), {
+        const next = translateX.value + direction * (40 + Math.random() * 60);
+        const clamped = Math.max(-80, Math.min(80, next));
+        translateX.value = withTiming(clamped, {
           duration: 2000,
           easing: Easing.inOut(Easing.ease),
         });

@@ -20,7 +20,7 @@ const ANIMAL_ASSETS: Record<string, { walk: any; sleep: any }> = {
     sleep: require('../assets/Lion/lion_sleep.gif'),
   },
   parrot: {
-    walk: require('../assets/Parrot/parrot walk.gif'),
+    walk: require('../assets/Parrot/parrot_walk.gif'),
     sleep: require('../assets/Parrot/parrot_sleep.gif'),
   },
   penguin: {
@@ -68,7 +68,9 @@ export function AnimalPet({ animal, size = 120, wandering = false }: AnimalPetPr
       if (shouldMove) {
         const direction = Math.random() > 0.5 ? 1 : -1;
         scaleX.value = direction > 0 ? 1 : -1;
-        translateX.value = withTiming(translateX.value + direction * (40 + Math.random() * 60), {
+        const next = translateX.value + direction * (40 + Math.random() * 60);
+        const clamped = Math.max(-80, Math.min(80, next));
+        translateX.value = withTiming(clamped, {
           duration: 2000,
           easing: Easing.inOut(Easing.ease),
         });

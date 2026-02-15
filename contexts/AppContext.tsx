@@ -232,11 +232,15 @@ Return ONLY a JSON array with objects having "title" (short, 3-6 words) and "des
 
   const toggleQuest = useCallback((id: string) => {
     setDailyQuests((prev) => {
+      const quest = prev.find((q) => q.id === id);
+      if (quest && !quest.completed) {
+        addCoins(10);
+      }
       const next = prev.map((q) => (q.id === id ? { ...q, completed: !q.completed } : q));
       persistQuests(next);
       return next;
     });
-  }, [persistQuests]);
+  }, [persistQuests, addCoins]);
 
   const editQuest = useCallback((id: string, title: string, description: string) => {
     setDailyQuests((prev) => {
