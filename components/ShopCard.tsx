@@ -9,15 +9,16 @@ interface ShopCardProps {
   panda: PandaType;
   ownedCount: number;
   onBuy: () => void;
+  onRemove?: () => void;
 }
 
-export function ShopCard({ panda, ownedCount, onBuy }: ShopCardProps) {
+export function ShopCard({ panda, ownedCount, onBuy, onRemove }: ShopCardProps) {
   const previewGif = panda.animal
     ? getAnimalWalkGif(panda.animal)
     : require('../assets/pandas/Gifs/Idle.gif');
 
   return (
-    <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onBuy}>
+    <View style={styles.card}>
       <View style={[styles.imageWrap, panda.tint ? { backgroundColor: panda.tint, borderRadius: 40 } : undefined]}>
         <Image
           source={previewGif}
@@ -32,10 +33,17 @@ export function ShopCard({ panda, ownedCount, onBuy }: ShopCardProps) {
       {ownedCount > 0 && (
         <Text style={styles.ownedText}>Owned: {ownedCount}</Text>
       )}
-      <View style={styles.buyBtn}>
-        <Text style={styles.buyText}>{panda.price} coins</Text>
+      <View style={styles.btnRow}>
+        <TouchableOpacity style={styles.buyBtn} onPress={onBuy} activeOpacity={0.7}>
+          <Text style={styles.buyText}>{panda.price} coins</Text>
+        </TouchableOpacity>
+        {ownedCount > 0 && onRemove && (
+          <TouchableOpacity style={styles.removeBtn} onPress={onRemove} activeOpacity={0.7}>
+            <Text style={styles.removeText}>Remove</Text>
+          </TouchableOpacity>
+        )}
       </View>
-    </TouchableOpacity>
+    </View>
   );
 }
 
@@ -70,12 +78,31 @@ const styles = StyleSheet.create({
     marginTop: 4,
     marginBottom: 8,
   },
+  btnRow: {
+    flexDirection: 'row',
+    gap: 6,
+    marginTop: 4,
+  },
   buyBtn: {
+    flex: 1,
     backgroundColor: Colors.gold,
-    paddingHorizontal: 20,
+    paddingHorizontal: 12,
     paddingVertical: 10,
     borderRadius: 12,
-    marginTop: 4,
+    alignItems: 'center',
+  },
+  removeBtn: {
+    paddingHorizontal: 10,
+    paddingVertical: 10,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.error,
+    alignItems: 'center',
+  },
+  removeText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: Colors.error,
   },
   buyText: {
     fontSize: 14,

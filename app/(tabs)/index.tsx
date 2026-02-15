@@ -45,7 +45,7 @@ export default function HomeScreen() {
       colors={[Colors.gradientDark, Colors.gradientMid, Colors.gradientLight]}
       style={styles.container}>
       <View style={[styles.header, { paddingTop: insets.top + 8 }]}>
-        <Text style={styles.title}>The Zoo</Text>
+        <Text style={styles.title}>Zoo</Text>
         <View style={styles.headerRight}>
           <CoinDisplay coins={coins} />
           <TouchableOpacity onPress={() => router.push('/profile')} style={styles.profileBtn}>

@@ -1,4 +1,4 @@
-# PandaFit
+# The Zoo
 
 A gamified health & fitness app built with React Native (Expo). Track workouts, scan food with AI, log your weight, complete quests to earn coins, and collect panda companions for your virtual grassland.
 

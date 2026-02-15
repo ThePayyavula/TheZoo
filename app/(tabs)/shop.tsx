@@ -7,7 +7,7 @@ import { useAppContext } from '../../contexts/AppContext';
 import { PANDA_TYPES } from '../../constants/pandaTypes';
 
 export default function ShopScreen() {
-  const { coins, spendCoins, addPanda, countOfType } = useAppContext();
+  const { coins, spendCoins, addPanda, removePanda, countOfType } = useAppContext();
 
   const handleBuy = (pandaId: string, price: number, name: string) => {
     Alert.alert('Buy Pet', `Buy ${name} for ${price} coins?`, [
@@ -22,6 +22,19 @@ export default function ShopScreen() {
           } else {
             Alert.alert('Not enough coins', 'Complete more quests to earn coins!');
           }
+        },
+      },
+    ]);
+  };
+
+  const handleRemove = (pandaId: string, name: string) => {
+    Alert.alert('Remove Pet', `Remove one ${name} from your zoo?`, [
+      { text: 'Cancel', style: 'cancel' },
+      {
+        text: 'Remove',
+        style: 'destructive',
+        onPress: async () => {
+          await removePanda(pandaId);
         },
       },
     ]);
@@ -46,6 +59,7 @@ export default function ShopScreen() {
               panda={item}
               ownedCount={countOfType(item.id)}
               onBuy={() => handleBuy(item.id, item.price, item.name)}
+              onRemove={() => handleRemove(item.id, item.name)}
             />
           ))}
           {row.length === 1 && <View style={styles.placeholder} />}

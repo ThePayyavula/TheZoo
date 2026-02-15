@@ -15,11 +15,10 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import * as ImagePicker from 'expo-image-picker';
 import { Colors } from '../../constants/colors';
 import { WorkoutCard } from '../../components/WorkoutCard';
-import { RoutineCard } from '../../components/RoutineCard';
 import { FoodResultCard } from '../../components/FoodResultCard';
 import { FoodLogEntryCard } from '../../components/FoodLogEntry';
 import { MacroBar } from '../../components/MacroBar';
-import { useWorkouts, Routine } from '../../hooks/useWorkouts';
+import { useWorkouts } from '../../hooks/useWorkouts';
 import { useFoodLog } from '../../hooks/useFoodLog';
 
 interface ScanResult {
@@ -98,13 +97,8 @@ async function analyzeFood(base64: string): Promise<ScanResult> {
 
 export default function WorkoutsScreen() {
   const {
-    routines,
-    addRoutine,
-    updateRoutine,
-    deleteRoutine,
     todayActivity,
     todayCalories,
-    logRoutineCompletion,
     logExercise,
     updateActivity,
   } = useWorkouts();
@@ -121,10 +115,6 @@ export default function WorkoutsScreen() {
   // Editing activity
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editCalories, setEditCalories] = useState('');
-
-  // Add routine form
-  const [showAddRoutine, setShowAddRoutine] = useState(false);
-  const [newRoutineName, setNewRoutineName] = useState('');
 
   const [scanning, setScanning] = useState(false);
   const [scanResult, setScanResult] = useState<ScanResult | null>(null);
@@ -173,34 +163,6 @@ export default function WorkoutsScreen() {
     updateActivity({ ...activity, calories: newCal });
     setEditingId(null);
     setEditCalories('');
-  };
-
-  const handleAddRoutine = async () => {
-    if (!newRoutineName.trim()) {
-      Alert.alert('Missing info', 'Please enter a routine name');
-      return;
-    }
-    await addRoutine({ name: newRoutineName.trim(), exercises: [] });
-    setNewRoutineName('');
-    setShowAddRoutine(false);
-  };
-
-  const handleStartRoutine = (routine: Routine) => {
-    const totalSets = routine.exercises.reduce((sum, ex) => sum + ex.sets.length, 0);
-    const estCalories = totalSets * 5;
-    const estDuration = totalSets * 2;
-
-    Alert.alert(
-      'Complete Routine',
-      `Log "${routine.name}" as completed?\n\nEstimate: ~${estDuration} min, ~${estCalories} cal`,
-      [
-        { text: 'Cancel', style: 'cancel' },
-        {
-          text: 'Log It',
-          onPress: () => logRoutineCompletion(routine, estDuration, estCalories),
-        },
-      ]
-    );
   };
 
   // --- Camera / Food scanning ---
@@ -285,47 +247,7 @@ export default function WorkoutsScreen() {
             </View>
           )}
 
-          {/* Section B: My Routines */}
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionTitle}>My Routines</Text>
-            <Pressable
-              style={styles.addRoutineBtn}
-              onPress={() => setShowAddRoutine(!showAddRoutine)}
-            >
-              <Text style={styles.addRoutineBtnText}>{showAddRoutine ? '\u2212' : '+'}</Text>
-            </Pressable>
-          </View>
-
-          {showAddRoutine && (
-            <View style={styles.addRoutineForm}>
-              <TextInput
-                style={styles.input}
-                placeholder="Routine name (e.g., Push Day)"
-                placeholderTextColor={Colors.textDim}
-                value={newRoutineName}
-                onChangeText={setNewRoutineName}
-              />
-              <Pressable style={styles.createBtn} onPress={handleAddRoutine}>
-                <Text style={styles.createBtnText}>Create Routine</Text>
-              </Pressable>
-            </View>
-          )}
-
-          {routines.length === 0 && !showAddRoutine ? (
-            <Text style={styles.empty}>Create your first routine</Text>
-          ) : (
-            routines.map((r) => (
-              <RoutineCard
-                key={r.id}
-                routine={r}
-                onStart={handleStartRoutine}
-                onUpdate={updateRoutine}
-                onDelete={deleteRoutine}
-              />
-            ))
-          )}
-
-          {/* Section C: Quick Log Exercise */}
+          {/* Section B: Quick Log Exercise */}
           <View style={styles.quickLogSection}>
             <Text style={styles.sectionTitle}>Quick Log Exercise</Text>
             <View style={styles.form}>
@@ -490,53 +412,11 @@ const styles = StyleSheet.create({
   resultWrap: {
     marginBottom: 20,
   },
-  // Section header
-  sectionHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 12,
-  },
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
     color: Colors.emerald,
     marginBottom: 12,
-  },
-  addRoutineBtn: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    backgroundColor: Colors.emerald,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 12,
-  },
-  addRoutineBtnText: {
-    color: Colors.white,
-    fontSize: 20,
-    fontWeight: '700',
-    lineHeight: 22,
-  },
-  // Add routine form
-  addRoutineForm: {
-    backgroundColor: Colors.bgCard,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: Colors.emeraldBorder,
-    padding: 14,
-    marginBottom: 12,
-  },
-  createBtn: {
-    backgroundColor: Colors.emerald,
-    borderRadius: 10,
-    padding: 12,
-    alignItems: 'center',
-  },
-  createBtnText: {
-    color: Colors.white,
-    fontSize: 15,
-    fontWeight: '700',
   },
   // Quick log
   quickLogSection: {

@@ -62,6 +62,7 @@ interface AppContextType {
   // Pandas
   ownedPandas: OwnedPanda[];
   addPanda: (typeId: string) => Promise<void>;
+  removePanda: (typeId: string) => Promise<boolean>;
   countOfType: (typeId: string) => number;
   // Profile
   profile: UserProfile | null;
@@ -162,6 +163,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const next = [...prev, newPanda];
       AsyncStorage.setItem(PANDAS_KEY, JSON.stringify(next));
       return next;
+    });
+  }, []);
+
+  const removePanda = useCallback(async (typeId: string): Promise<boolean> => {
+    return new Promise((resolve) => {
+      setOwnedPandas((prev) => {
+        const idx = prev.findIndex((p) => p.typeId === typeId);
+        if (idx === -1) { resolve(false); return prev; }
+        const next = [...prev.slice(0, idx), ...prev.slice(idx + 1)];
+        AsyncStorage.setItem(PANDAS_KEY, JSON.stringify(next));
+        resolve(true);
+        return next;
+      });
     });
   }, []);
 
@@ -279,7 +293,7 @@ Return ONLY a JSON array with objects having "title" (short, 3-6 words) and "des
     <AppContext.Provider
       value={{
         coins, addCoins, spendCoins,
-        ownedPandas, addPanda, countOfType,
+        ownedPandas, addPanda, removePanda, countOfType,
         profile, saveProfile, bmi, profileSummary,
         dailyQuests, toggleQuest, editQuest, deleteQuest, addCustomQuest, generateAIQuests, questsLoading,
         loaded,
