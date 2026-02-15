@@ -13,12 +13,13 @@ interface ShopCardProps {
 export function ShopCard({ panda, owned, onBuy }: ShopCardProps) {
   return (
     <View style={styles.card}>
-      <Image
-        source={require('../assets/pandas/Gifs/Idle.gif')}
-        style={[styles.image, panda.tint ? { tintColor: panda.tint } : undefined]}
-        contentFit="contain"
-        autoplay
-      />
+      <View style={[styles.imageWrap, panda.tint ? { backgroundColor: panda.tint, borderRadius: 40 } : undefined]}>
+        <Image
+          source={require('../assets/pandas/Gifs/Idle.gif')}
+          style={styles.image}
+          contentFit="contain"
+        />
+      </View>
       <Text style={styles.name}>{panda.name}</Text>
       <Text style={styles.desc} numberOfLines={2}>
         {panda.description}
@@ -50,10 +51,12 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 3,
   },
+  imageWrap: {
+    marginBottom: 8,
+  },
   image: {
     width: 80,
     height: 80,
-    marginBottom: 8,
   },
   name: {
     fontSize: 14,

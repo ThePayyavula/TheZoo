@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 import { Image } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import Animated, {
@@ -10,7 +10,6 @@ import Animated, {
 } from 'react-native-reanimated';
 
 const GIF_IDLE = require('../assets/pandas/Gifs/Idle.gif');
-const GIF_BLINK = require('../assets/pandas/Gifs/Blink.gif');
 const GIF_WALK = require('../assets/pandas/Gifs/Walk.gif');
 
 const DANCE_GIFS = [
@@ -28,7 +27,7 @@ interface PandaProps {
   tint?: string;
 }
 
-export function Panda({ size = 120, wandering = false, tint }: PandaProps) {
+export function Panda({ size = 120, wandering = false }: PandaProps) {
   const [state, setState] = useState<'idle' | 'walk' | 'dance'>('idle');
   const [danceGif, setDanceGif] = useState(DANCE_GIFS[0]);
   const translateX = useSharedValue(0);
@@ -72,17 +71,15 @@ export function Panda({ size = 120, wandering = false, tint }: PandaProps) {
     ],
   }));
 
+  const currentGif = state === 'idle' ? GIF_IDLE : state === 'walk' ? GIF_WALK : danceGif;
+
   return (
     <Animated.View style={animatedStyle}>
       <Pressable onPress={handleTap}>
         <Image
-          source={state === 'idle' ? GIF_IDLE : state === 'walk' ? GIF_WALK : danceGif}
-          style={[
-            { width: size, height: size },
-            tint ? { tintColor: tint } : undefined,
-          ]}
+          source={currentGif}
+          style={{ width: size, height: size }}
           contentFit="contain"
-          autoplay
         />
       </Pressable>
     </Animated.View>

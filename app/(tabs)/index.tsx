@@ -59,7 +59,7 @@ export default function HomeScreen() {
                 top: 60 + (i % 3) * 80,
               },
             ]}>
-            <Panda size={120} wandering tint={panda!.tint} />
+            <Panda size={120} wandering />
           </View>
         ))}
       </View>

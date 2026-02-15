@@ -4,12 +4,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const COINS_KEY = '@pandafit_coins';
 
 export function useCoins() {
-  const [coins, setCoins] = useState(0);
+  const [coins, setCoins] = useState(200);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
     AsyncStorage.getItem(COINS_KEY).then((val) => {
-      if (val !== null) setCoins(parseInt(val, 10));
+      if (val !== null) {
+        setCoins(parseInt(val, 10));
+      } else {
+        AsyncStorage.setItem(COINS_KEY, '200');
+      }
       setLoaded(true);
     });
   }, []);
