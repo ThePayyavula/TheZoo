@@ -36,6 +36,7 @@ export interface ActivityLog {
   name: string;
   calories: number;
   duration: number; // minutes
+  reps?: number;
   date: string; // ISO
   routineId?: string; // if type === 'routine'
 }
@@ -129,6 +130,14 @@ export function useWorkouts() {
     return newEntry;
   }, []);
 
+  const updateActivity = useCallback(async (updated: ActivityLog) => {
+    setActivityLog((prev) => {
+      const next = prev.map((a) => (a.id === updated.id ? updated : a));
+      AsyncStorage.setItem(ACTIVITY_LOG_KEY, JSON.stringify(next));
+      return next;
+    });
+  }, []);
+
   const logRoutineCompletion = useCallback(async (routine: Routine, duration: number, calories: number) => {
     const entry = await addActivity({
       type: 'routine',
@@ -142,12 +151,13 @@ export function useWorkouts() {
     return entry;
   }, [addActivity, addWorkout]);
 
-  const logExercise = useCallback(async (name: string, duration: number, calories: number) => {
+  const logExercise = useCallback(async (name: string, duration: number, calories: number, reps?: number) => {
     const entry = await addActivity({
       type: 'exercise',
       name,
       calories,
       duration,
+      reps,
     });
     // Backward compat
     await addWorkout({ name, duration, calories });
@@ -185,5 +195,6 @@ export function useWorkouts() {
     todayCalories,
     logRoutineCompletion,
     logExercise,
+    updateActivity,
   };
 }
