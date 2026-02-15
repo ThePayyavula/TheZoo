@@ -51,15 +51,12 @@ export function QuestCard({ quest, progress, claimed, onClaim }: QuestCardProps)
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 16,
     marginBottom: 12,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
   },
   cardClaimed: {
     opacity: 0.6,
@@ -79,15 +76,15 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.black,
+    color: Colors.textPrimary,
   },
   desc: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     marginTop: 2,
   },
   reward: {
-    backgroundColor: Colors.grassBg,
+    backgroundColor: Colors.bgCardLight,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 12,
@@ -95,17 +92,18 @@ const styles = StyleSheet.create({
   rewardText: {
     fontSize: 13,
     fontWeight: '600',
+    color: Colors.gold,
   },
   progressBg: {
     height: 8,
-    backgroundColor: Colors.gray200,
+    backgroundColor: Colors.bgCardLight,
     borderRadius: 4,
     overflow: 'hidden',
     marginBottom: 8,
   },
   progressFill: {
     height: '100%',
-    backgroundColor: Colors.grassLight,
+    backgroundColor: Colors.emerald,
     borderRadius: 4,
   },
   footer: {
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
   },
   progressText: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     fontWeight: '600',
   },
   claimBtn: {
@@ -127,7 +125,7 @@ const styles = StyleSheet.create({
   claimBtnText: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.black,
+    color: Colors.white,
   },
   claimedText: {
     fontSize: 13,
@@ -136,7 +134,7 @@ const styles = StyleSheet.create({
   },
   typeBadge: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: Colors.textMuted,
     textTransform: 'capitalize',
   },
 });

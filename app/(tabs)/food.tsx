@@ -128,7 +128,7 @@ export default function FoodScreen() {
 
       {scanning && (
         <View style={styles.loadingWrap}>
-          <ActivityIndicator size="large" color={Colors.grassLight} />
+          <ActivityIndicator size="large" color={Colors.emerald} />
           <Text style={styles.loadingText}>Analyzing your food...</Text>
         </View>
       )}
@@ -172,7 +172,7 @@ export default function FoodScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.grassBg,
+    backgroundColor: Colors.bgDark,
   },
   content: {
     padding: 16,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.grassDark,
+    color: Colors.emerald,
     marginBottom: 12,
   },
   btnRow: {
@@ -193,15 +193,12 @@ const styles = StyleSheet.create({
   },
   scanBtn: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 20,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
   },
   scanBtnIcon: {
     fontSize: 32,
@@ -210,7 +207,7 @@ const styles = StyleSheet.create({
   scanBtnText: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.black,
+    color: Colors.textPrimary,
   },
   loadingWrap: {
     alignItems: 'center',
@@ -219,14 +216,16 @@ const styles = StyleSheet.create({
   loadingText: {
     marginTop: 12,
     fontSize: 15,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
   },
   resultWrap: {
     marginBottom: 20,
   },
   totals: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 14,
     marginBottom: 12,
   },
@@ -243,12 +242,12 @@ const styles = StyleSheet.create({
   },
   macroLabel: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     fontWeight: '600',
   },
   empty: {
     textAlign: 'center',
-    color: Colors.gray500,
+    color: Colors.textMuted,
     fontSize: 15,
     marginTop: 20,
   },

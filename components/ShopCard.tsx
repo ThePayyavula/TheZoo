@@ -1,18 +1,18 @@
 import React from 'react';
-import { View, Text, Pressable, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 import { Colors } from '../constants/colors';
 import { PandaType } from '../constants/pandaTypes';
 
 interface ShopCardProps {
   panda: PandaType;
-  owned: boolean;
+  ownedCount: number;
   onBuy: () => void;
 }
 
-export function ShopCard({ panda, owned, onBuy }: ShopCardProps) {
+export function ShopCard({ panda, ownedCount, onBuy }: ShopCardProps) {
   return (
-    <View style={styles.card}>
+    <TouchableOpacity style={styles.card} activeOpacity={0.7} onPress={onBuy}>
       <View style={[styles.imageWrap, panda.tint ? { backgroundColor: panda.tint, borderRadius: 40 } : undefined]}>
         <Image
           source={require('../assets/pandas/Gifs/Idle.gif')}
@@ -24,32 +24,26 @@ export function ShopCard({ panda, owned, onBuy }: ShopCardProps) {
       <Text style={styles.desc} numberOfLines={2}>
         {panda.description}
       </Text>
-      {owned ? (
-        <View style={styles.ownedBadge}>
-          <Text style={styles.ownedText}>Owned</Text>
-        </View>
-      ) : (
-        <Pressable style={styles.buyBtn} onPress={onBuy}>
-          <Text style={styles.buyText}>🪙 {panda.price}</Text>
-        </Pressable>
+      {ownedCount > 0 && (
+        <Text style={styles.ownedText}>Owned: {ownedCount}</Text>
       )}
-    </View>
+      <View style={styles.buyBtn}>
+        <Text style={styles.buyText}>🪙 {panda.price}</Text>
+      </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   card: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 12,
     margin: 6,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
   },
   imageWrap: {
     marginBottom: 8,
@@ -61,36 +55,32 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.black,
+    color: Colors.textPrimary,
     textAlign: 'center',
   },
   desc: {
     fontSize: 11,
-    color: Colors.gray600,
+    color: Colors.textMuted,
     textAlign: 'center',
     marginTop: 4,
     marginBottom: 8,
   },
   buyBtn: {
     backgroundColor: Colors.gold,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     borderRadius: 12,
+    marginTop: 4,
   },
   buyText: {
     fontSize: 14,
     fontWeight: '700',
-    color: Colors.black,
-  },
-  ownedBadge: {
-    backgroundColor: Colors.grassBg,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderRadius: 12,
+    color: Colors.white,
   },
   ownedText: {
-    fontSize: 14,
+    fontSize: 13,
     fontWeight: '600',
-    color: Colors.grassDark,
+    color: Colors.emerald,
+    marginBottom: 4,
   },
 });

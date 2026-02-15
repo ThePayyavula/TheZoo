@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
 import { Colors } from '../constants/colors';
+import { AppProvider } from '../contexts/AppContext';
 
 export { ErrorBoundary } from 'expo-router';
 
@@ -17,10 +18,15 @@ SplashScreen.preventAutoHideAsync();
 
 const PandaTheme = {
   ...DefaultTheme,
+  dark: false,
   colors: {
     ...DefaultTheme.colors,
-    primary: Colors.grassDark,
-    background: Colors.grassBg,
+    primary: Colors.emerald,
+    background: Colors.bgDark,
+    card: Colors.bgCard,
+    text: Colors.textPrimary,
+    border: Colors.emeraldBorder,
+    notification: Colors.emerald,
   },
 };
 
@@ -44,10 +50,19 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={PandaTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      </Stack>
-    </ThemeProvider>
+    <AppProvider>
+      <ThemeProvider value={PandaTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="profile"
+            options={{
+              presentation: 'modal',
+              headerShown: false,
+            }}
+          />
+        </Stack>
+      </ThemeProvider>
+    </AppProvider>
   );
 }

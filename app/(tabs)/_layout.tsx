@@ -2,6 +2,7 @@ import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { Tabs } from 'expo-router';
 import { Colors } from '../../constants/colors';
+import { ProfileIcon } from '../../components/ProfileIcon';
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>['name'];
@@ -14,11 +15,12 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors.grassDark,
+        tabBarActiveTintColor: Colors.tabActive,
         tabBarInactiveTintColor: Colors.tabInactive,
         tabBarStyle: {
           backgroundColor: Colors.tabBg,
-          borderTopColor: Colors.gray200,
+          borderTopColor: Colors.tabBorder,
+          borderTopWidth: 1,
           height: 88,
           paddingBottom: 28,
           paddingTop: 8,
@@ -28,12 +30,15 @@ export default function TabLayout() {
           fontWeight: '600',
         },
         headerStyle: {
-          backgroundColor: Colors.grassLight,
+          backgroundColor: Colors.bgCard,
+          borderBottomWidth: 1,
+          borderBottomColor: Colors.emeraldBorder,
         },
-        headerTintColor: Colors.white,
+        headerTintColor: Colors.textPrimary,
         headerTitleStyle: {
           fontWeight: '700',
         },
+        headerRight: () => <ProfileIcon />,
       }}>
       <Tabs.Screen
         name="index"

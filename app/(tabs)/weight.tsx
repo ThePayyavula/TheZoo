@@ -45,7 +45,7 @@ export default function WeightScreen() {
             <TextInput
               style={styles.input}
               placeholder="Weight (lbs)"
-              placeholderTextColor={Colors.gray400}
+              placeholderTextColor={Colors.textDim}
               keyboardType="decimal-pad"
               value={weightInput}
               onChangeText={setWeightInput}
@@ -86,27 +86,24 @@ export default function WeightScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.grassBg,
+    backgroundColor: Colors.bgDark,
   },
   content: {
     padding: 16,
     paddingBottom: 40,
   },
   form: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 16,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
   },
   formTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.grassDark,
+    color: Colors.emerald,
     marginBottom: 12,
   },
   inputRow: {
@@ -115,14 +112,16 @@ const styles = StyleSheet.create({
   },
   input: {
     flex: 1,
-    backgroundColor: Colors.gray100,
+    backgroundColor: Colors.bgCardLight,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 14,
     fontSize: 15,
-    color: Colors.black,
+    color: Colors.textPrimary,
   },
   addBtn: {
-    backgroundColor: Colors.grassLight,
+    backgroundColor: Colors.emerald,
     borderRadius: 12,
     paddingHorizontal: 24,
     justifyContent: 'center',
@@ -135,46 +134,40 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.grassDark,
+    color: Colors.emerald,
     marginBottom: 12,
   },
   chartWrap: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 12,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
   },
   historyCard: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 14,
     marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
   },
   historyWeight: {
     fontSize: 16,
     fontWeight: '700',
-    color: Colors.black,
+    color: Colors.textPrimary,
   },
   historyDate: {
     fontSize: 13,
-    color: Colors.gray500,
+    color: Colors.textMuted,
   },
   empty: {
     textAlign: 'center',
-    color: Colors.gray500,
+    color: Colors.textMuted,
     fontSize: 15,
     marginTop: 20,
   },

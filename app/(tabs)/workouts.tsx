@@ -45,7 +45,7 @@ export default function WorkoutsScreen() {
           <TextInput
             style={styles.input}
             placeholder="Workout name (e.g., Running)"
-            placeholderTextColor={Colors.gray400}
+            placeholderTextColor={Colors.textDim}
             value={name}
             onChangeText={setName}
           />
@@ -53,7 +53,7 @@ export default function WorkoutsScreen() {
             <TextInput
               style={[styles.input, styles.halfInput]}
               placeholder="Duration (min)"
-              placeholderTextColor={Colors.gray400}
+              placeholderTextColor={Colors.textDim}
               keyboardType="numeric"
               value={duration}
               onChangeText={setDuration}
@@ -61,7 +61,7 @@ export default function WorkoutsScreen() {
             <TextInput
               style={[styles.input, styles.halfInput]}
               placeholder="Calories"
-              placeholderTextColor={Colors.gray400}
+              placeholderTextColor={Colors.textDim}
               keyboardType="numeric"
               value={calories}
               onChangeText={setCals}
@@ -86,35 +86,34 @@ export default function WorkoutsScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.grassBg,
+    backgroundColor: Colors.bgDark,
   },
   content: {
     padding: 16,
     paddingBottom: 40,
   },
   form: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 16,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 3,
   },
   formTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: Colors.grassDark,
+    color: Colors.emerald,
     marginBottom: 12,
   },
   input: {
-    backgroundColor: Colors.gray100,
+    backgroundColor: Colors.bgCardLight,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 14,
     fontSize: 15,
-    color: Colors.black,
+    color: Colors.textPrimary,
     marginBottom: 10,
   },
   row: {
@@ -125,7 +124,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   addBtn: {
-    backgroundColor: Colors.grassLight,
+    backgroundColor: Colors.emerald,
     borderRadius: 12,
     padding: 14,
     alignItems: 'center',
@@ -139,12 +138,12 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.grassDark,
+    color: Colors.emerald,
     marginBottom: 12,
   },
   empty: {
     textAlign: 'center',
-    color: Colors.gray500,
+    color: Colors.textMuted,
     fontSize: 15,
     marginTop: 20,
   },

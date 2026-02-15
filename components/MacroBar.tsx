@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
     height: 10,
     borderRadius: 5,
     overflow: 'hidden',
-    backgroundColor: Colors.gray200,
+    backgroundColor: Colors.bgCardLight,
   },
   segment: {
     height: '100%',

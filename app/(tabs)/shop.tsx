@@ -1,19 +1,15 @@
 import React from 'react';
-import { View, Text, FlatList, StyleSheet, Alert } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, Alert } from 'react-native';
 import { Colors } from '../../constants/colors';
 import { ShopCard } from '../../components/ShopCard';
 import { CoinDisplay } from '../../components/CoinDisplay';
-import { useCoins } from '../../hooks/useCoins';
-import { usePandas } from '../../hooks/usePandas';
+import { useAppContext } from '../../contexts/AppContext';
 import { PANDA_TYPES } from '../../constants/pandaTypes';
 
 export default function ShopScreen() {
-  const { coins, spendCoins } = useCoins();
-  const { addPanda, hasPanda } = usePandas();
+  const { coins, spendCoins, addPanda, countOfType } = useAppContext();
 
-  const handleBuy = async (pandaId: string, price: number, name: string) => {
-    if (hasPanda(pandaId)) return;
-
+  const handleBuy = (pandaId: string, price: number, name: string) => {
     Alert.alert('Buy Panda', `Buy ${name} for ${price} coins?`, [
       { text: 'Cancel', style: 'cancel' },
       {
@@ -21,8 +17,8 @@ export default function ShopScreen() {
         onPress: async () => {
           const success = await spendCoins(price);
           if (success) {
-            addPanda(pandaId);
-            Alert.alert('Welcome!', `${name} has joined your grassland!`);
+            await addPanda(pandaId);
+            Alert.alert('Welcome!', `A new ${name} has joined your grassland!`);
           } else {
             Alert.alert('Not enough coins', 'Complete more quests to earn coins!');
           }
@@ -31,49 +27,61 @@ export default function ShopScreen() {
     ]);
   };
 
+  const rows: (typeof PANDA_TYPES[number])[][] = [];
+  for (let i = 0; i < PANDA_TYPES.length; i += 2) {
+    rows.push(PANDA_TYPES.slice(i, i + 2));
+  }
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <View style={styles.header}>
-        <Text style={styles.subtitle}>Collect unique pandas for your grassland</Text>
+        <Text style={styles.subtitle}>Buy pandas for your grassland</Text>
         <CoinDisplay coins={coins} />
       </View>
-      <FlatList
-        data={PANDA_TYPES}
-        numColumns={2}
-        contentContainerStyle={styles.grid}
-        renderItem={({ item }) => (
-          <ShopCard
-            panda={item}
-            owned={hasPanda(item.id)}
-            onBuy={() => handleBuy(item.id, item.price, item.name)}
-          />
-        )}
-        keyExtractor={(item) => item.id}
-      />
-    </View>
+      {rows.map((row, rowIdx) => (
+        <View key={rowIdx} style={styles.row}>
+          {row.map((item) => (
+            <ShopCard
+              key={item.id}
+              panda={item}
+              ownedCount={countOfType(item.id)}
+              onBuy={() => handleBuy(item.id, item.price, item.name)}
+            />
+          ))}
+          {row.length === 1 && <View style={styles.placeholder} />}
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.grassBg,
+    backgroundColor: Colors.bgDark,
+  },
+  content: {
+    padding: 10,
+    paddingBottom: 40,
   },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: 16,
+    padding: 6,
     paddingBottom: 8,
   },
   subtitle: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     flex: 1,
     marginRight: 12,
   },
-  grid: {
-    padding: 10,
-    paddingBottom: 40,
+  row: {
+    flexDirection: 'row',
+  },
+  placeholder: {
+    flex: 1,
+    margin: 6,
   },
 });

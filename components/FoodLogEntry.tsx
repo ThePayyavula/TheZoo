@@ -31,15 +31,12 @@ export function FoodLogEntryCard({ entry }: FoodLogEntryProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 14,
     marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
   },
   row: {
     flexDirection: 'row',
@@ -49,7 +46,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.black,
+    color: Colors.textPrimary,
   },
   cal: {
     fontSize: 14,
@@ -58,12 +55,12 @@ const styles = StyleSheet.create({
   },
   macros: {
     fontSize: 12,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     marginTop: 4,
   },
   time: {
     fontSize: 12,
-    color: Colors.gray400,
+    color: Colors.textDim,
     marginTop: 4,
   },
 });

@@ -35,21 +35,18 @@ const styles = StyleSheet.create({
   card: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 12,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 14,
     marginBottom: 8,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.06,
-    shadowRadius: 4,
-    elevation: 2,
   },
   iconWrap: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: Colors.grassBg,
+    backgroundColor: Colors.bgCardLight,
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 12,
@@ -63,11 +60,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 15,
     fontWeight: '600',
-    color: Colors.black,
+    color: Colors.textPrimary,
   },
   meta: {
     fontSize: 13,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     marginTop: 2,
   },
   dateWrap: {
@@ -75,11 +72,11 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 12,
-    color: Colors.gray500,
+    color: Colors.textMuted,
   },
   time: {
     fontSize: 12,
-    color: Colors.gray400,
+    color: Colors.textDim,
     marginTop: 2,
   },
 });

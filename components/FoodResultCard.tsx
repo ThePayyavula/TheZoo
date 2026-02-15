@@ -51,19 +51,16 @@ export function FoodResultCard({ result, onLog, onDismiss }: FoodResultCardProps
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.bgCard,
     borderRadius: 16,
+    borderWidth: 1,
+    borderColor: Colors.emeraldBorder,
     padding: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.12,
-    shadowRadius: 12,
-    elevation: 5,
   },
   title: {
     fontSize: 20,
     fontWeight: '700',
-    color: Colors.black,
+    color: Colors.textPrimary,
     marginBottom: 4,
   },
   calories: {
@@ -90,7 +87,7 @@ const styles = StyleSheet.create({
   },
   macroText: {
     fontSize: 13,
-    color: Colors.gray700,
+    color: Colors.textSecondary,
   },
   actions: {
     flexDirection: 'row',
@@ -101,19 +98,19 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: Colors.gray300,
+    borderColor: Colors.emeraldBorder,
     alignItems: 'center',
   },
   dismissText: {
     fontSize: 15,
-    color: Colors.gray600,
+    color: Colors.textSecondary,
     fontWeight: '600',
   },
   logBtn: {
     flex: 1,
     paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: Colors.grassLight,
+    backgroundColor: Colors.emerald,
     alignItems: 'center',
   },
   logText: {

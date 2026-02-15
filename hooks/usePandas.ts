@@ -3,8 +3,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const PANDAS_KEY = '@pandafit_pandas';
 
+export interface OwnedPanda {
+  instanceId: string;
+  typeId: string;
+}
+
 export function usePandas() {
-  const [ownedPandas, setOwnedPandas] = useState<string[]>(['classic']);
+  const [ownedPandas, setOwnedPandas] = useState<OwnedPanda[]>([
+    { instanceId: 'classic_0', typeId: 'classic' },
+  ]);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
@@ -14,19 +21,19 @@ export function usePandas() {
     });
   }, []);
 
-  const addPanda = useCallback(async (pandaId: string) => {
+  const addPanda = useCallback(async (typeId: string) => {
     setOwnedPandas((prev) => {
-      if (prev.includes(pandaId)) return prev;
-      const next = [...prev, pandaId];
+      const instanceId = `${typeId}_${Date.now()}`;
+      const next = [...prev, { instanceId, typeId }];
       AsyncStorage.setItem(PANDAS_KEY, JSON.stringify(next));
       return next;
     });
   }, []);
 
-  const hasPanda = useCallback(
-    (pandaId: string) => ownedPandas.includes(pandaId),
+  const countOfType = useCallback(
+    (typeId: string) => ownedPandas.filter((p) => p.typeId === typeId).length,
     [ownedPandas]
   );
 
-  return { ownedPandas, loaded, addPanda, hasPanda };
+  return { ownedPandas, loaded, addPanda, countOfType };
 }

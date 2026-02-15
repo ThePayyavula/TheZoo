@@ -20,7 +20,7 @@ export function WeightChart({ entries }: WeightChartProps) {
   const sorted = [...entries].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
-  const recent = sorted.slice(-14); // last 14 entries
+  const recent = sorted.slice(-14);
   const labels = recent.map((e) => {
     const d = new Date(e.date);
     return `${d.getMonth() + 1}/${d.getDate()}`;
@@ -39,16 +39,19 @@ export function WeightChart({ entries }: WeightChartProps) {
         height={200}
         yAxisSuffix=" lb"
         chartConfig={{
-          backgroundColor: Colors.white,
-          backgroundGradientFrom: Colors.white,
-          backgroundGradientTo: Colors.white,
+          backgroundColor: Colors.bgCard,
+          backgroundGradientFrom: Colors.bgCard,
+          backgroundGradientTo: Colors.bgCardLight,
           decimalPlaces: 1,
-          color: (opacity = 1) => `rgba(45, 90, 39, ${opacity})`,
-          labelColor: (opacity = 1) => `rgba(97, 97, 97, ${opacity})`,
+          color: (opacity = 1) => `rgba(5, 108, 130, ${opacity})`,
+          labelColor: (opacity = 1) => `rgba(62, 106, 116, ${opacity})`,
           propsForDots: {
             r: '4',
             strokeWidth: '2',
-            stroke: Colors.grassDark,
+            stroke: Colors.emerald,
+          },
+          propsForBackgroundLines: {
+            stroke: Colors.emeraldBorder,
           },
         }}
         bezier
@@ -69,11 +72,11 @@ const styles = StyleSheet.create({
     height: 200,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.gray100,
+    backgroundColor: Colors.bgCardLight,
     borderRadius: 12,
   },
   emptyText: {
-    color: Colors.gray500,
+    color: Colors.textMuted,
     fontSize: 14,
   },
 });

@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const COINS_KEY = '@pandafit_coins';
@@ -6,39 +6,38 @@ const COINS_KEY = '@pandafit_coins';
 export function useCoins() {
   const [coins, setCoins] = useState(200);
   const [loaded, setLoaded] = useState(false);
+  const coinsRef = useRef(200);
 
   useEffect(() => {
     AsyncStorage.getItem(COINS_KEY).then((val) => {
       if (val !== null) {
-        setCoins(parseInt(val, 10));
+        const parsed = parseInt(val, 10);
+        setCoins(parsed);
+        coinsRef.current = parsed;
       } else {
         AsyncStorage.setItem(COINS_KEY, '200');
+        coinsRef.current = 200;
       }
       setLoaded(true);
     });
   }, []);
 
   const addCoins = useCallback(async (amount: number) => {
-    setCoins((prev) => {
-      const next = prev + amount;
-      AsyncStorage.setItem(COINS_KEY, String(next));
-      return next;
-    });
+    const next = coinsRef.current + amount;
+    coinsRef.current = next;
+    setCoins(next);
+    await AsyncStorage.setItem(COINS_KEY, String(next));
   }, []);
 
   const spendCoins = useCallback(async (amount: number): Promise<boolean> => {
-    return new Promise((resolve) => {
-      setCoins((prev) => {
-        if (prev < amount) {
-          resolve(false);
-          return prev;
-        }
-        const next = prev - amount;
-        AsyncStorage.setItem(COINS_KEY, String(next));
-        resolve(true);
-        return next;
-      });
-    });
+    if (coinsRef.current < amount) {
+      return false;
+    }
+    const next = coinsRef.current - amount;
+    coinsRef.current = next;
+    setCoins(next);
+    await AsyncStorage.setItem(COINS_KEY, String(next));
+    return true;
   }, []);
 
   return { coins, loaded, addCoins, spendCoins };
