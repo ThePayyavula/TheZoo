@@ -1,0 +1,158 @@
+# LevelUp (Working Title)
+An RPG-style fitness game where users level up a cute avatar by completing
+personalized health quests. Users earn XP for healthy actions, unlock cosmetics,
+and keep their streak alive. The core experience is powered by **PatriotAI** for
+personalization and food education.
+---
+## Core Idea
+Users choose a goal (bulk/cut). The app uses **PatriotAI** to generate daily
+quests based on the user’s answers and progress. Users complete quests
+(workout, healthy meal choices, hydration, weigh-ins) to earn XP and level up
+their avatar.
+**Theme:** Solo-leveling / pet avatar progression
+**Focus:** Best UI/UX + best usage of PatriotAI (personalized goals + food
+learning)
+---
+## PatriotAI Usage (Key Features)
+### 1) Daily Quest Generator (Page 1)
+PatriotAI generates Today’s Goals and Daily Quests using:
+- Onboarding answers (goal, weight, schedule, preferences)
+- Recent logs (workouts, food, weight trend, streak)
+- Re-evaluation answers (every 3–4 weeks)
+### 2) Food Learning + Ingredient Evaluation (Page 2)
+Page 2 is a learning page:
+- What is this food?
+- Where does it come from?
+- What do reputable sources say about key ingredients?
+- Why might this be healthy/not healthy?
+- Healthier alternatives and portion suggestions
+---
+## User Flow
+### Page 0 — Onboarding + Re-Evaluation (Recurring)
+**First-time onboarding**
+- Goal: Bulk / Cut
+- Height, weight, age (BMI baseline)
+- Optional: diet preference, schedule, activity level
+**Re-evaluation (every ~3–4 weeks)**
+Reuses Page 0 to refine the plan without losing progress:
+- Are you reaching your goals?
+- Has your goal changed?
+- What would you like to improve?
+- What’s hardest right now?
+- Feedback: how can the app be better?
+Re-evaluation updates personalization, but does not reset
+XP/level/achievements.
+---
+## Navigation (Hub-Based)
+After onboarding, **Page 5 (Home / Living Room)** is the hub.
+From Home, the user can access:
+- Page 1: Daily Quests
+- Page 2: Food Learning
+- Page 3: Progress
+- Page 3.5 (Optional): Exercise Verification
+- Page 4: Shop + Closet
+- Page 6: Achievements
+- Page 7 (Optional): Friends Zoo / Social
+- Page 0: Re-evaluate Goals (after 3–4 weeks or via Settings)
+Every page returns to Home.
+---
+## Pages (Detailed)
+### Page 5 — Home Hub (Living Room)
+- Avatar chilling + strong game vibe
+- Shows:
+- Level + XP bar
+- Streak + weekly check-in status
+- Quests completed today
+- Buttons to go to Quests / Food / Progress / Shop / Achievements
+### Page 1 — Daily Quests (PatriotAI)
+- Generated quests based on user answers + history
+- 3–5 quest cards:
+- Workout
+- Healthy meal goal
+- Water goal
+- Weigh-in goal
+- Completing quests awards XP
+### Page 2 — Food Learning + Ingredient Evaluation (PatriotAI)
+Primary purpose: teach users what they are eating
+- Scan barcode or search for a food
+- Show:
+- Ingredients breakdown (highlight key ingredients)
+- Label explanation (plain language)
+- Summary of what reputable sources say about major ingredients
+- Simple health score + reasoning
+- Suggestions: swaps, portion guidance, better alternatives
+- XP awarded when user completes a healthy choice goal (daily cap)
+### Page 3 — Progress
+- Weight graph + progress trends
+- Streak and consistency stats
+- Optional proof gallery for logs (demo-friendly)
+### Page 3.5 — Exercise Verification (Optional, Only If Time Permits)
+Stretch feature to verify exercise completion and award XP.
+- Select workout type (pushups/squats/plank/jumping jacks)
+- Timer/rep counter + submit proof (manual entry or video/photo)
+- XP awarded with daily cap + anti-abuse limits
+- Optional PatriotAI: form tips + progression suggestions
+### Page 4 — Shop + Closet
+- Spend XP on cosmetics and equip them
+- Shop lock rule applies after inactivity
+### Page 6 — Achievements
+- Badges for streak milestones, first actions, learning milestones, and (optional)
+verified workout milestones
+### Page 7 — Friends Zoo / Social (Optional)
+Users can:
+- Add friends
+- Visit a friend’s “Zoo” (their avatar + room/skins + achievements display)
+- Post short updates about their experience (social feed)
+**Content Safety / PG-13 Language Filter**
+All posts and comments must follow a PG-13 standard:
+- Profanity and slurs are blocked or censored
+- Toxic harassment is filtered
+- Repeated violations can restrict posting
+For the hackathon demo, this can be implemented as:
+- Simple text post + PatriotAI moderation/censoring
+- Basic friends list + “visit profile” page
+---
+## XP System (MVP)
+XP is earned from consistent actions:
+- Workout quest → XP
+- Food goal (healthy choice) → XP (daily cap)
+- Water goal → XP (daily cap)
+- Weigh-in goal → XP (daily cap)
+- Exercise verification (Page 3.5 optional) → XP (daily cap)
+- Weekly check-in bonus → XP
+Anti-spam: each category has a daily cap.
+---
+## Consistency Rules (Inactivity + Checkpoints)
+### Weekly Check-In (Save Progress)
+- Must check in at least once every 7 days
+- If inactive for 7 days:
+- revert to a checkpoint (game-state penalty, not deleting health data)
+### Shop Lock (Inactivity Penalty)
+- Inactive for 7 days → Shop locked
+- Unlock Shop: complete at least 1 quest/day for 3 consecutive days
+### Goal Re-Evaluation (No Progress Loss)
+- Every 3–4 weeks
+- Updates personalization and quest difficulty
+- Does not reset:
+- XP/Level
+- Achievements
+- Purchases/cosmetics
+- Weight history
+---
+## Demo Scope (Hackathon)
+### Included in demo
+- Panda avatar (others locked)
+- Home hub + navigation
+- PatriotAI-generated daily quests
+- Food learning page (ingredient explanation + healthy/not healthy reasoning)
+- Progress graph
+- Shop/closet flow
+- Achievements page
+- Optional: exercise verification (Page 3.5)
+- Optional: friends zoo + PG-13 post censoring (Page 7)
+---
+## One-Line Pitch (Devpost Ready)
+A Solo-Leveling RPG fitness app powered by PatriotAI: it generates daily quests
+from your goals, teaches you what’s in your food, and optionally adds workout
+verification and a PG-13 social zoo—earn XP, level up your avatar, and adapt
+your plan every few weeks without losing progress.
